@@ -87,3 +87,8 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Sphinx Doc
+_build
+_static
+_templates
