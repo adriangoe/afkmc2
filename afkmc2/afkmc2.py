@@ -1,5 +1,6 @@
-"""Python Implementation of Fast and Provably Good Seedings for k-Means
+"""Python Implementation of different k-Means Seeding Algorithms
 
+Inspiration and Algorithm from
 > Fast and Provably Good Seedings for k-Means
 > Olivier Bachem, Mario Lucic, S. Hamed Hassani and Andreas Krause
 > In Neural Information Processing Systems (NIPS), 2016.
@@ -18,16 +19,21 @@ import numpy as np
 
 
 def kmpp(X, k):
-    """KMeans++ Seeding as described by Arthur and Vassilvitskii (2007)
-    runs in O(nkd)
+    """
+    | KMeans++ Seeding as described by Arthur and Vassilvitskii (2007)
+    | Runtime :code:`O(nkd)`
 
-    Args:
-        X: np.array with datapoints. shape: n, d
-        k: Number cluster centers
-        m: length of markov chain. Default: 200
+    :param X: Datapoints. Shape: (n, d)
+    :type X: np.array
+    :param k: Number cluster centers.
+    :type k: int
 
-    Returns:
-        np.array with cluster centers for seeding. shape: k, d
+    :return: Cluster centers for seeding. Shape: (k, d)
+    :rtype: np.array
+
+    :Example:
+
+        :code:`seeds = afkmc2.kmpp(X, 3)`
     """
     centers = np.zeros((k, X.shape[1]), dtype=np.float)
 
@@ -52,16 +58,23 @@ def kmpp(X, k):
 
 
 def kmc2(X, k, m=200):
-    """KMC^2 Seeding in O(nd + mk^2d) as described by
-    Bachem, Lucic, Hassani and Krause (2016)
+    """
+    | KMC^2 Seeding as described by Bachem, Lucic, Hassani and Krause (2016)
+    | Runtime :code:`O(mk^2d)`
 
-    Args:
-        X: np.array with datapoints. shape: n, d
-        k: Number cluster centers
-        m: length of markov chain. Default: 200
+    :param X: Datapoints. Shape: (n, d)
+    :type X: np.array
+    :param k: Number cluster centers.
+    :type k: int
+    :param m: Length of Markov Chain. Default 200
+    :type m: int
 
-    Returns:
-        np.array with cluster centers for seeding. shape: k, d
+    :return: Cluster centers for seeding. Shape: (k, d)
+    :rtype: np.array
+
+    :Example:
+
+        :code:`seeds = afkmc2.kmc2(X, 3)`
     """
     centers = np.zeros((k, X.shape[1]), dtype=np.float)
 
@@ -93,17 +106,23 @@ def kmc2(X, k, m=200):
 
 
 def afkmc2(X, k, m=200):
-    """Python Assumption Free KMC^2 Seeding in O(nd + mk^2d)
+    """
+    | AFKMC^2 Seeding as described by Bachem, Lucic, Hassani and Krause (2016)
+    | Runtime :code:`O(nd + mk^2d)`
 
-    Args:
-        X: np.array with datapoints. shape: n, d
-        k: Number cluster centers
-        m: length of markov chain. Default: 200
-        af: Use assumption free algorithm (true) or uniform assumption (false)
-        memo: Memoize distances
+    :param X: Datapoints. Shape: (n, d)
+    :type X: np.array
+    :param k: Number cluster centers.
+    :type k: int
+    :param m: Length of Markov Chain. Default 200
+    :type m: int
 
-    Returns:
-        np.array with cluster centers for seeding. shape: k, d
+    :return: Cluster centers for seeding. Shape: (k, d)
+    :rtype: np.array
+
+    :Example:
+
+        :code:`seeds = afkmc2.afkmc2(X, 3)`
     """
     centers = np.zeros((k, X.shape[1]), dtype=np.float)
 
@@ -139,19 +158,28 @@ def afkmc2(X, k, m=200):
     return centers
 
 
-def afkmc2_mem(X, k, m=200):
-    """Python Assumption Free KMC^2 Seeding in O(nd + mk^2d)
-    Uses O(kn) additional space to store distances. Upper bound
-    remains the same, but for small datasets speedup is significant
-    (when n is not much bigger than m)
+def afkmc2_c(X, k, m=200):
+    """
+    | Cached AFKMC^2 Seeding based on AFKMC
+    | as described by Bachem, Lucic, Hassani and Krause (2016)
 
-    Args:
-        X: np.array with datapoints. shape: n, d
-        k: Number cluster centers
-        m: length of markov chain. Default: 200
+    | Caching addition to prevent duplicate work for small datasets
+    | Additional space cost during execution :code:`O(nk)`
+    | Runtime :code:`O(nd + mk^2d)`
 
-    Returns:
-        np.array with cluster centers for seeding. shape: k, d
+    :param X: Datapoints. Shape: (n, d)
+    :type X: np.array
+    :param k: Number cluster centers.
+    :type k: int
+    :param m: Length of Markov Chain. Default 200
+    :type m: int
+
+    :return: Cluster centers for seeding. Shape: (k, d)
+    :rtype: np.array
+
+    :Example:
+
+        :code:`seeds = afkmc2.afkmc2_c(X, 3)`
     """
     centers = np.zeros((k, X.shape[1]), dtype=np.float)
 

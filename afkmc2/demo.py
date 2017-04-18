@@ -20,25 +20,25 @@ iris = datasets.load_iris()
 X = iris.data
 y = iris.target
 
-start = time.time()
-for _ in range(50):
-    afkmc2.afkmc2(X, 3)
-print (time.time() - start)/50
+# start = time.time()
+# for _ in range(50):
+#     afkmc2.afkmc2(X, 3)
+# print (time.time() - start)/50
 
-start = time.time()
-for _ in range(50):
-    afkmc2.kmc2(X, 3)
-print (time.time() - start)/50
+# start = time.time()
+# for _ in range(50):
+#     afkmc2.kmc2(X, 3)
+# print (time.time() - start)/50
 
-start = time.time()
-for _ in range(50):
-    afkmc2.afkmc2_mem(X, 3)
-print (time.time() - start)/50
+# start = time.time()
+# for _ in range(50):
+#     afkmc2.afkmc2_mem(X, 3)
+# print (time.time() - start)/50
 
-start = time.time()
-for _ in range(50):
-    afkmc2.kmpp(X, 3)
-print (time.time() - start)/50
+# start = time.time()
+# for _ in range(50):
+#     afkmc2.kmpp(X, 3)
+# print (time.time() - start)/50
 
 
 seeding = afkmc2.afkmc2(X, 3, m=200)
