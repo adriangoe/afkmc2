@@ -10,4 +10,7 @@ setup(
   download_url = 'https://github.com/adriangoe/afkmc2/archive/0.1.tar.gz',
   keywords = ['kmeans', 'seeding', 'sklearn', 'numpy'],
   classifiers = [],
+  install_requires=[
+      "numpy",
+  ],
 )
