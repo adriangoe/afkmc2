@@ -2,7 +2,7 @@
 Seeding Reference
 =================
 
-`View Code On Github`<https://github.com/adriangoe/afkmc2/blob/master/afkmc2/afkmc2.py>_.
+`View Code On Github <https://github.com/adriangoe/afkmc2/blob/master/afkmc2/afkmc2.py>`_.
 
 K-Means++
 ---------
