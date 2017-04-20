@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Simple Demo to show how this code finds good seedings for KMeans.
+"""Demo/Benchmarking to show how this code finds good seedings for KMeans.
 Example used is the Iris Dataset from sklearn.
 
 Also contains some comparison between the different variants and graphing.
@@ -16,32 +16,38 @@ import time
 import afkmc2
 
 np.random.seed(5)
+
+# Runtime Measurements
+X = np.random.rand(500, 80)
+
+start = time.time()
+for _ in range(50):
+    afkmc2.kmpp(X, 20)
+print "runtime kmpp:\t\t", (time.time() - start)/50
+
+start = time.time()
+for _ in range(50):
+    afkmc2.kmc2(X, 20)
+print "runtime kmc2:\t\t", (time.time() - start)/50
+
+start = time.time()
+for _ in range(50):
+    afkmc2.afkmc2(X, 20)
+print "runtime afkmc2:\t\t", (time.time() - start)/50
+
+start = time.time()
+for _ in range(50):
+    afkmc2.afkmc2_c(X, 20)
+print "runtime afkmc2_c:\t", (time.time() - start)/50
+
+# Iris Visualization
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target
 
-# start = time.time()
-# for _ in range(50):
-#     afkmc2.afkmc2(X, 3)
-# print (time.time() - start)/50
 
-# start = time.time()
-# for _ in range(50):
-#     afkmc2.kmc2(X, 3)
-# print (time.time() - start)/50
-
-# start = time.time()
-# for _ in range(50):
-#     afkmc2.afkmc2_mem(X, 3)
-# print (time.time() - start)/50
-
-# start = time.time()
-# for _ in range(50):
-#     afkmc2.kmpp(X, 3)
-# print (time.time() - start)/50
-
-
-seeding = afkmc2.afkmc2(X, 3, m=200)
+# AFKMC2 Seeding
+seeding = afkmc2.afkmc2_c(X, 3)
 
 fig = plt.figure(0, figsize=(4, 3))
 plt.clf()
@@ -58,11 +64,13 @@ ax.scatter(seeding[:, 3], seeding[:, 0], seeding[:, 2], c='red', s=100)
 ax.w_xaxis.set_ticklabels([])
 ax.w_yaxis.set_ticklabels([])
 ax.w_zaxis.set_ticklabels([])
-ax.set_title('Clusters after AFKMC2 Seeding')
+ax.set_title('Clusters after AFKMC2C Seeding')
 ax.set_xlabel('Petal width')
 ax.set_ylabel('Sepal length')
 ax.set_zlabel('Petal length')
 
+
+# Random Seeding
 fig = plt.figure(1, figsize=(4, 3))
 plt.clf()
 ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)

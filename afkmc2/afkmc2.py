@@ -35,7 +35,8 @@ def kmpp(X, k):
 
         :code:`seeds = afkmc2.kmpp(X, 3)`
     """
-    centers = np.zeros((k, X.shape[1]), dtype=np.float)
+    X = X.astype(np.float64, copy=False)
+    centers = np.zeros((k, X.shape[1]), dtype=np.float64)
 
     # Sample first center uniformly
     centers[0, :] = X[np.random.choice(X.shape[0]), :]
@@ -76,7 +77,8 @@ def kmc2(X, k, m=200):
 
         :code:`seeds = afkmc2.kmc2(X, 3)`
     """
-    centers = np.zeros((k, X.shape[1]), dtype=np.float)
+    X = X.astype(np.float64, copy=False)
+    centers = np.zeros((k, X.shape[1]), dtype=np.float64)
 
     # Sample first center uniformly
     centers[0, :] = X[np.random.choice(X.shape[0]), :]
@@ -95,7 +97,7 @@ def kmc2(X, k, m=200):
             dy2 = min([np.linalg.norm(X[y, :]-centers[j, :])**2
                       for j in range(i)])
             # Move to candidate according to acceptance prob based on distances
-            if dy2/dx2 > np.random.uniform():
+            if dx2 == 0 or dy2/dx2 > np.random.uniform():
                 x = y
                 dx2 = dy2
 
@@ -124,7 +126,8 @@ def afkmc2(X, k, m=200):
 
         :code:`seeds = afkmc2.afkmc2(X, 3)`
     """
-    centers = np.zeros((k, X.shape[1]), dtype=np.float)
+    X = X.astype(np.float64, copy=False)
+    centers = np.zeros((k, X.shape[1]), dtype=np.float64)
 
     # Sample first center uniformly
     centers[0, :] = X[np.random.choice(X.shape[0]), :]
@@ -148,7 +151,7 @@ def afkmc2(X, k, m=200):
             dy2 = min([np.linalg.norm(X[y, :]-centers[j, :])**2
                       for j in range(i)])
             # Move to candidate according to acceptance prob based on distances
-            if (dy2*q[x])/(dx2*q[y]) > np.random.uniform():
+            if dx2*q[y] == 0 or (dy2*q[x])/(dx2*q[y]) > np.random.uniform():
                 x = y
                 dx2 = dy2
 
@@ -181,13 +184,15 @@ def afkmc2_c(X, k, m=200):
 
         :code:`seeds = afkmc2.afkmc2_c(X, 3)`
     """
-    centers = np.zeros((k, X.shape[1]), dtype=np.float)
+    X = X.astype(np.float64, copy=False)
+    centers = np.zeros((k, X.shape[1]), dtype=np.float64)
 
     # Sample first center uniformly
     centers[0, :] = X[np.random.choice(X.shape[0]), :]
 
     # Distance memoization
-    d_store = np.empty((X.shape[0], k))
+    d_store = np.empty((X.shape[0], k), dtype=np.float64)
+    d_store.fill(-1)
 
     def distance(i, j):
         """Get squared distance between node and one of the centers
@@ -198,13 +203,12 @@ def afkmc2_c(X, k, m=200):
         Returns:
             Squared Distance between X[i, :] and centers[j, :]
         """
-        if not d_store[i, j]:
+        if d_store[i, j] < 0:
             d_store[i, j] = np.linalg.norm(X[i, :]-centers[j, :])**2
         return d_store[i, j]
 
     # Create assumption free proposal distribution: O(n)
-    d2 = [distance(i, 0)
-          for i in range(X.shape[0])]
+    d2 = [distance(i, 0) for i in range(X.shape[0])]
     q = d2/(2*np.sum(d2)) + 1/(2.0*X.shape[0])
 
     # k-1 iterations
@@ -218,10 +222,9 @@ def afkmc2_c(X, k, m=200):
         for j in range(1, m):
             # New Sample
             y = np.random.choice(X.shape[0], p=q)
-            dy2 = min([distance(y, j)
-                      for j in range(i)])
+            dy2 = min([distance(y, j) for j in range(i)])
             # Move to candidate according to acceptance prob based on distances
-            if (dy2*q[x])/(dx2*q[y]) > np.random.uniform():
+            if dx2*q[y] == 0 or (dy2*q[x])/(dx2*q[y]) > np.random.uniform():
                 x = y
                 dx2 = dy2
 
