@@ -1,15 +1,9 @@
+.. image:: https://readthedocs.org/projects/afkmc2/badge/?version=latest
+:target: http://afkmc2.readthedocs.io/en/latest/?badge=latest
+:alt: Documentation Status
+
+Assumption Free KMeans Monte Carlo
 ==================================
-Assumption Free K-Means++ Seedings
-==================================
-
-.. toctree::
-   :maxdepth: 2
-
-   reference
-   demo
-
-Introduction
-------------
 
 This package contains sklearn compatible python implementations of various K-Means seeding algorithms.
 
@@ -23,7 +17,7 @@ The package was inspired by the AFKMC^2 algorithm detailed in
 The algorithm uses Monte Carlo Markov Chain to quickly find good seedings for KMeans and offers a runtime improvement over the common K-Means++ algorithm.
 
 Usage
-^^^^^
+-----
 
 Using this package to get seedings for KMeans in sklearn is as simple as::
 
@@ -37,25 +31,24 @@ Using this package to get seedings for KMeans in sklearn is as simple as::
     print model.cluster_centers_
 
 Installation
-^^^^^^^^^^^^
+------------
 
-Quickly install afkmc2 by running::
+Quickly install afkmc2 by running (coming soon)::
 
     pip install afkmc2
 
 Contribute
-^^^^^^^^^^
+----------
 
 * Issue Tracker: https://github.com/adriangoe/afkmc2/issues
-* Source Code: https://github.com/adriangoe/afkmc2
 
 Support
-^^^^^^^
+-------
 
 You can reach out to me through https://adriangoe.me/#contact-us.
 
 
 License
-^^^^^^^
+-------
 
 The project is licensed under the MIT License.
