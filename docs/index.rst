@@ -2,12 +2,6 @@
 Assumption Free K-Means++ Seedings
 ==================================
 
-.. toctree::
-   :maxdepth: 2
-
-   reference
-   demo
-
 Introduction
 ------------
 
@@ -59,3 +53,12 @@ License
 ^^^^^^^
 
 The project is licensed under the MIT License.
+
+Reference
+---------
+
+.. toctree::
+   :maxdepth: 2
+
+   reference
+   demo

@@ -63,7 +63,7 @@ Size   K    Dimensions KM++   KMC2   AFKMC2 AFKMC2C
 500    20   80         .43924 .20874 .28856 .173561
 ====== ==== ========== ====== ====== ====== =======
 
-We notice that the proposed addition of caching reduces performances in situations with numbers of observations. This is due to the fact that we at maximum save :code:`k*m` passes over the data. Since MCMC does not need to increase m for large datasets we will only save between 200 and 1200 calculations for the case with 6 centers and 100000 points. Only the last example shows a case in which the time saving due to caching is significant and clearly outperforms all other cases since in a dataset with 500 points we are more likely to have duplicates among our 200 points in the Markov Chain.
+We notice that the proposed addition of caching reduces performances in situations with numbers of observations. This is due to the fact that we save between :code:`(1-k)*m` and :code:`.5*(1-k)^2*m` passes over the data. Since MCMC does not need to increase m for large datasets we will only save slightly above 1200 calculations for the case with 6 centers and 100000 points but still have to do at least 101000 calculations. Only the last example shows a case in which the time saving due to caching is significant and clearly outperforms all other cases since in a dataset with 500 points we are more likely to have duplicates among our 200 points in the Markov Chain.
 
 
 `Demo Code on GitHub <https://github.com/adriangoe/afkmc2/blob/master/afkmc2/demo.py>`_.
