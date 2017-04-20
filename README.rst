@@ -1,6 +1,6 @@
 .. image:: https://readthedocs.org/projects/afkmc2/badge/?version=latest
-:target: http://afkmc2.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+    :target: http://afkmc2.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 Assumption Free KMeans Monte Carlo
 ==================================
