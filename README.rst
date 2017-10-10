@@ -45,7 +45,7 @@ Contribute
 Support
 -------
 
-You can reach out to me through https://adriangoe.me/#contact-us.
+You can reach out to me through https://adriangoe.com/#contact-us.
 
 
 License
